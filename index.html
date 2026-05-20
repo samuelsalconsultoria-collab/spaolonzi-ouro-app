@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spaolonzi · Precificação Ouro 18K</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #2d5016;
+      --green-hover: #3a6b1c;
+      --green-pale:  #eef4e8;
+      --green-mid:   #c2d9a8;
+      --gold:        #c9a227;
+      --gold-pale:   #fdf4dc;
+      --bg:          #f2f4ef;
+      --card:        #ffffff;
+      --border:      #dde4d5;
+      --text:        #18200f;
+      --muted:       #6b7560;
+      --red:         #c0392b;
+      --orange:      #ca6f1e;
+      --blue:        #1a5276;
+      --purple:      #6c3483;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
+      --shadow:      0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.05);
+      --radius:      10px;
+      --radius-sm:   6px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────────────── */
+    header {
+      background: var(--green);
+      color: #fff;
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+
+    .brand-mark {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 17px; color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 { font-size: 17px; font-weight: 800; letter-spacing: .3px; }
+    .brand-text p  { font-size: 11px; opacity: .65; font-weight: 400; }
+
+    .header-meta { text-align: right; font-size: 11px; opacity: .6; }
+
+    /* ── LAYOUT ─────────────────────────────────────────────────── */
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── CARD ────────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding-bottom: 13px;
+      margin-bottom: 15px;
+      border-bottom: 1.5px solid var(--green-pale);
+    }
+
+    .sec-num {
+      width: 22px; height: 22px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .card-title h2 {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── INPUTS ──────────────────────────────────────────────────── */
+    .field { margin-bottom: 13px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .tip {
+      width: 15px; height: 15px;
+      background: var(--border);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700;
+      color: var(--muted);
+      cursor: help;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 20px; top: -4px;
+      background: rgba(20,30,10,.92);
+      color: #fff;
+      font-size: 11px; font-weight: 400;
+      padding: 7px 10px;
+      border-radius: var(--radius-sm);
+      width: 210px;
+      white-space: normal;
+      line-height: 1.45;
+      z-index: 900;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .15s;
+    }
+    .tip:hover::after { opacity: 1; }
+
+    .inp-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .pfx, .sfx {
+      position: absolute;
+      font-size: 13px; font-weight: 600;
+      color: var(--muted);
+      pointer-events: none;
+      top: 50%; transform: translateY(-50%);
+    }
+    .pfx { left: 11px; }
+    .sfx { right: 11px; }
+
+    .inp-wrap input {
+      width: 100%;
+      height: 42px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      background: #fafafa;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+      -moz-appearance: textfield;
+    }
+    .inp-wrap input::-webkit-outer-spin-button,
+    .inp-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .inp-wrap input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(45,80,22,.13);
+      background: #fff;
+    }
+
+    .inp-wrap.p input { padding: 0 11px 0 26px; }
+    .inp-wrap.s input { padding: 0 28px 0 11px; }
+    .inp-wrap input   { padding: 0 11px; }
+
+    /* ── OUTPUT PILL ─────────────────────────────────────────────── */
+    .out-pill {
+      background: var(--green-pale);
+      border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 13px;
+    }
+
+    .out-pill .pill-label {
+      font-size: 12px; font-weight: 700; color: var(--green);
+    }
+
+    .out-pill .pill-val {
+      font-size: 20px; font-weight: 900; color: var(--green);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -.3px;
+    }
+
+    /* ── 2-COL GRID ──────────────────────────────────────────────── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ── BUTTONS ─────────────────────────────────────────────────── */
+    .action-row { display: flex; gap: 10px; margin-top: 16px; }
+
+    .btn {
+      flex: 1; height: 46px;
+      border: none; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      transition: all .15s;
+    }
+    .btn-primary { background: var(--green); color: #fff; }
+    .btn-primary:hover { background: var(--green-hover); }
+    .btn-primary:active { transform: scale(.98); }
+
+    .btn-ghost {
+      background: #fff; color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── RESULTS PANEL ───────────────────────────────────────────── */
+    .results-col { display: flex; flex-direction: column; gap: 16px; }
+
+    .hero-card {
+      background: var(--green);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-left .hero-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: rgba(255,255,255,.65);
+      margin-bottom: 4px;
+    }
+
+    .hero-price {
+      font-size: 42px; font-weight: 900;
+      color: #fff; letter-spacing: -1.5px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-right {
+      text-align: right;
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+    }
+    .hero-right .markup-badge {
+      background: rgba(255,255,255,.15);
+      padding: 4px 10px; border-radius: 99px;
+      font-weight: 700; font-size: 12px; color: #fff;
+      margin-bottom: 4px; display: inline-block;
+    }
+
+    /* ── SCENARIO CARDS ──────────────────────────────────────────── */
+    .scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .sc-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 15px 16px;
+      transition: border-color .15s, box-shadow .15s;
+      position: relative;
+    }
+    .sc-card:hover { border-color: var(--green); box-shadow: var(--shadow); }
+
+    .sc-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .7px;
+      padding: 3px 9px; border-radius: 99px;
+    }
+    .badge-pix    { background: #d5f5e3; color: #1e8449; }
+    .badge-parc   { background: #d6eaf8; color: #1a5276; }
+    .badge-fornec { background: #fef9e7; color: #9a7d0a; border: 1px solid #f0d060; }
+    .badge-ti     { background: #f4ecf7; color: #6c3483; }
+
+    .copy-btn {
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--muted); font-size: 14px;
+      padding: 3px 5px; border-radius: 4px;
+      transition: all .15s;
+      line-height: 1;
+    }
+    .copy-btn:hover { color: var(--green); background: var(--green-pale); }
+
+    .sc-price {
+      font-size: 30px; font-weight: 900;
+      color: var(--text); letter-spacing: -.7px;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 2px;
+    }
+
+    .sc-sub {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 11px;
+      min-height: 17px;
+    }
+
+    .sc-margins { display: flex; gap: 8px; }
+
+    .m-chip {
+      flex: 1;
+      background: #f8faf5;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 8px;
+      text-align: center;
+    }
+    .m-chip .m-label {
+      font-size: 9px; font-weight: 800;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: .6px; display: block; margin-bottom: 2px;
+    }
+    .m-chip .m-val {
+      font-size: 15px; font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pos  { color: #1e8449; }
+    .warn { color: #ca6f1e; }
+    .neg  { color: var(--red); }
+    .neu  { color: var(--muted); }
+
+    .ti-note {
+      margin-top: 9px;
+      background: #f4ecf7;
+      border: 1px solid #d7bde2;
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      font-size: 11px; font-weight: 600; color: var(--purple);
+      display: none;
+    }
+
+    .avista-note {
+      margin-top: 8px;
+      font-size: 11px; color: var(--muted);
+      display: none;
+    }
+
+    /* ── HISTORY ─────────────────────────────────────────────────── */
+    .history-wrap { margin-top: 20px; }
+
+    .history-hdr {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .history-hdr h3 { font-size: 14px; font-weight: 800; color: var(--green); }
+
+    .btn-sm {
+      height: 30px; padding: 0 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      font-size: 11px; font-weight: 700;
+      cursor: pointer; color: var(--muted);
+      transition: all .15s;
+    }
+    .btn-sm:hover { border-color: var(--red); color: var(--red); }
+
+    .table-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: 12px; }
+
+    thead tr { background: var(--green); color: #fff; }
+    th {
+      padding: 9px 13px;
+      text-align: left;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: .8px; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    td {
+      padding: 9px 13px;
+      border-bottom: 1px solid #f2f4ef;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--green-pale); }
+
+    .empty-hist {
+      text-align: center; padding: 32px;
+      color: var(--muted); font-size: 13px;
+    }
+
+    /* ── TOAST ───────────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 22px; right: 22px;
+      background: var(--green); color: #fff;
+      padding: 11px 18px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+      z-index: 9999;
+      transform: translateY(80px); opacity: 0;
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── DARK TOGGLE ─────────────────────────────────────────────── */
+    .dark-toggle {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 99px;
+      padding: 4px 10px 4px 8px;
+      color: #fff; font-size: 11px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; gap: 5px;
+      transition: background .15s;
+    }
+    .dark-toggle:hover { background: rgba(255,255,255,.25); }
+
+    /* ── DARK MODE ───────────────────────────────────────────────── */
+    body.dark {
+      --bg:       #111713;
+      --card:     #1a1f16;
+      --border:   #2c3526;
+      --text:     #e8eddf;
+      --muted:    #7a8a70;
+      --green-pale: #1c2a14;
+      --green-mid:  #2d4520;
+    }
+    body.dark .brand-mark { box-shadow: 0 2px 6px rgba(0,0,0,.5); }
+    body.dark input { background: #1e2419 !important; color: var(--text); }
+    body.dark .m-chip { background: #1c2318; }
+    body.dark table { background: var(--card); }
+    body.dark tbody tr:hover { background: #1e2a16; }
+    body.dark .sc-card { background: var(--card); }
+    body.dark .ti-note { background: #261a2e; border-color: #4a2c5e; }
+
+    /* ── TRADE-IN CALCULATOR ────────────────────────────────────── */
+    .ti-calc-box {
+      background: var(--gold-pale);
+      border: 1.5px solid #e8d080;
+      border-radius: var(--radius-sm);
+      padding: 12px 13px;
+      margin-bottom: 10px;
+    }
+
+    .ti-calc-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .ti-calc-header span {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .8px;
+      color: #7a5c00;
+    }
+    .ti-auto-tag {
+      font-size: 9px; font-weight: 800;
+      background: var(--gold); color: #fff;
+      padding: 2px 7px; border-radius: 99px;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+
+    .ti-calc-preview {
+      margin-top: 10px;
+      background: rgba(201,162,39,.15);
+      border: 1px solid #d4a820;
+      border-radius: var(--radius-sm);
+      padding: 7px 11px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ti-calc-preview .tc-label {
+      font-size: 11px; font-weight: 700; color: #7a5c00;
+    }
+    .ti-calc-preview .tc-val {
+      font-size: 16px; font-weight: 900; color: #7a5c00;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ti-divider {
+      display: flex; align-items: center; gap: 8px;
+      margin: 10px 0 10px;
+      color: var(--muted); font-size: 11px; font-weight: 600;
+    }
+    .ti-divider::before, .ti-divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+
+    /* input with both prefix AND suffix */
+    .inp-wrap.ps input { padding: 0 28px 0 26px; }
+
+    /* ── LUCRO NOMINAL CHIP ───────────────────────────────────────── */
+    .m-chip-lucro {
+      background: #f0f7ea !important;
+      border-color: var(--green-mid) !important;
+    }
+    .m-chip-lucro .m-label { color: var(--green) !important; }
+
+    body.dark .ti-calc-box { background: #1e1a08; border-color: #5a4a10; }
+    body.dark .ti-calc-preview { background: rgba(201,162,39,.08); }
+    body.dark .ti-calc-header span,
+    body.dark .ti-calc-preview .tc-label,
+    body.dark .ti-calc-preview .tc-val { color: #c9a227; }
+    body.dark .m-chip-lucro { background: #152010 !important; }
+
+    /* ── TEXT FIELDS ────────────────────────────────────────────── */
+    .field-text input,
+    .field-text textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500;
+      color: var(--text); background: #fafafa;
+      outline: none; padding: 0 11px;
+      font-family: inherit;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    .field-text input { height: 42px; }
+    .field-text textarea {
+      height: 58px; padding: 9px 11px;
+      resize: none; line-height: 1.4;
+    }
+    .field-text input:focus,
+    .field-text textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(45,80,22,.13);
+      background: #fff;
+    }
+    body.dark .field-text input,
+    body.dark .field-text textarea { background: #1e2419; color: var(--text); }
+
+    /* ── HISTORY EDIT BTN ────────────────────────────────────────── */
+    .hist-produto {
+      max-width: 150px; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    .edit-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer; font-size: 11px;
+      padding: 3px 8px; color: var(--muted);
+      transition: all .15s; white-space: nowrap;
+    }
+    .edit-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+    /* ── MODAL ───────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.42);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      width: 440px; max-width: 92vw;
+      box-shadow: 0 16px 56px rgba(0,0,0,.22);
+      transform: translateY(14px);
+      transition: transform .22s;
+      border: 1px solid var(--border);
+    }
+    .modal-overlay.open .modal-box { transform: translateY(0); }
+    .modal-hdr {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 18px;
+    }
+    .modal-title { font-size: 15px; font-weight: 800; color: var(--green); }
+    .modal-info  { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .modal-close {
+      background: none; border: none;
+      cursor: pointer; font-size: 20px; line-height: 1;
+      color: var(--muted); padding: 0 2px;
+      transition: color .15s;
+    }
+    .modal-close:hover { color: var(--red); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .modal-actions .btn { flex: 0; padding: 0 20px; height: 40px; font-size: 13px; }
+
+    /* ── TRADE-IN MODE TOGGLE ───────────────────────────────────── */
+    .ti-mode-wrap { margin-top: 13px; }
+    .ti-mode-label {
+      font-size: 11px; font-weight: 700;
+      color: var(--muted); text-transform: uppercase;
+      letter-spacing: .7px; margin-bottom: 6px;
+    }
+    .ti-mode-pills {
+      display: flex;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 3px; gap: 3px;
+    }
+    .ti-mode-opt { flex: 1; position: relative; }
+    .ti-mode-opt input[type="radio"] {
+      position: absolute; opacity: 0; width: 0; height: 0;
+    }
+    .ti-mode-opt label {
+      display: flex; align-items: center; justify-content: center;
+      height: 34px; border-radius: 6px;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; color: var(--muted);
+      transition: all .15s; white-space: nowrap; gap: 5px;
+    }
+    .ti-mode-opt input:checked + label {
+      background: var(--green); color: #fff;
+      box-shadow: 0 1px 4px rgba(45,80,22,.25);
+    }
+    .ti-mode-opt label .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      border: 2px solid currentColor; flex-shrink: 0;
+      transition: background .15s;
+    }
+    .ti-mode-opt input:checked + label .dot {
+      background: #fff; border-color: #fff;
+    }
+    body.dark .ti-mode-pills { background: #0e1410; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .scenarios { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 14px; }
+      header { padding: 0 16px; }
+      .scenarios { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
+      .sc-price { font-size: 24px; }
+      .hero-price { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<header>
+  <div class="brand">
+    <div class="brand-mark">S</div>
+    <div class="brand-text">
+      <h1>Spaolonzi · Ouro 18K</h1>
+      <p>Precificação de peças exclusivas</p>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="header-meta">
+      <div id="hdr-date"></div>
+      <div>v1.0 · local</div>
+    </div>
+    <button class="dark-toggle" onclick="toggleDark()">🌙 Escuro</button>
+  </div>
+</header>
+
+<!-- ── MAIN ────────────────────────────────────────────────────── -->
+<div class="wrap">
+  <div class="main-grid">
+
+    <!-- LEFT: Inputs -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+      <!-- §1 Base -->
+      <div class="card">
+        <div class="card-title">
+          <span class="sec-num">1</span>
+          <h2>Base de Preço</h2>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            Preço de custo (fornecedor)
+            <span class="tip" data-tip="Valor que você paga ao fornecedor pela peça. Não inclui markup nem impostos.">?</span>
+          </div>
+          <div class="inp-wrap p">
+            <span class="pfx">R$</span>
+            <input type="number" id="inp-custo" min="0" step="0.01" placeholder="0,00" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">
+            Markup (ex: 2.0, 2.5, 3.0)
+            <span class="tip" data-tip="Multiplicador sobre o custo. Ex: 2.0 = custo × 2 (100% de ganho), 2.5 = custo × 2.5 (150% de ganho), 3.0 = custo × 3 (200% de ganho). PVF = custo × markup.">?</span>
+          </div>
+          <div class="inp-wrap">
+            <input type="number" id="inp-markup" min="0" step="0.1" placeholder="2.2" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="grid2" style="margin-top:2px">
+          <div class="field field-text">
+            <div class="field-label">
+              Nome do cliente
+              <span class="tip" data-tip="Opcional. Identifica a cotação no histórico. Não afeta os cálculos.">?</span>
+            </div>
+            <input type="text" id="inp-cliente" placeholder="Ex: João Silva" maxlength="80" autocomplete="off">
+          </div>
+          <div class="field field-text">
+            <div class="field-label">
+              Produto / Descrição
+              <span class="tip" data-tip="Opcional. Descreva a peça para referência no histórico.">?</span>
+            </div>
+            <textarea id="inp-produto" placeholder="Ex: Anel com diamante 18K" maxlength="120"></textarea>
+          </div>
+        </div>
+
+        <div class="out-pill" style="margin-top:4px">
+          <span class="pill-label">Preço Venda Final (PVF)</span>
+          <span class="pill-val" id="out-pvf">R$ —</span>
+        </div>
+      </div>
+
+      <!-- §2 Trade-in -->
+      <div class="card">
+        <div class="card-title">
+          <span class="sec-num">2</span>
+          <h2>Trade-in</h2>
+        </div>
+
+        <!-- Calculadora automática -->
+        <div class="ti-calc-box">
+          <div class="ti-calc-header">
+            <span>Calculadora de valor</span>
+            <span class="ti-auto-tag">auto</span>
+          </div>
+          <div class="grid2">
+            <div class="field" style="margin-bottom:0">
+              <div class="field-label">
+                Peso da peça (g)
+                <span class="tip" data-tip="Peso da peça usada em gramas. Multiplique pelo preço do ouro e pela fração para obter o crédito.">?</span>
+              </div>
+              <div class="inp-wrap s">
+                <input type="number" id="inp-ti-peso" min="0" step="0.01" placeholder="0,00" autocomplete="off">
+                <span class="sfx">g</span>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <div class="field-label">
+                Ouro 24K (R$/g)
+                <span class="tip" data-tip="Cotação do ouro 24K do dia em R$ por grama. Consulte a B3 ou site de referência.">?</span>
+              </div>
+              <div class="inp-wrap p">
+                <span class="pfx">R$</span>
+                <input type="number" id="inp-ti-ouro" min="0" step="0.01" placeholder="0,00" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:10px;margin-bottom:0">
+            <div class="field-label">
+              Fração paga ao cliente (%)
+              <span class="tip" data-tip="Percentual do valor bruto do ouro que você repassa como crédito. Padrão do mercado: 65%. Ajuste conforme sua política.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-ti-frac" min="0" max="100" step="0.1" placeholder="65,0" value="65" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+          <div class="ti-calc-preview" id="ti-calc-preview" style="display:none">
+            <span class="tc-label">→ Valor calculado (peso × cotação × fração)</span>
+            <span class="tc-val" id="ti-calc-val">—</span>
+          </div>
+        </div>
+
+        <div class="ti-divider"><span>ou informe o valor diretamente</span></div>
+
+        <div class="field" style="margin-bottom:0">
+          <div class="field-label">
+            Valor do crédito da peça usada
+            <span class="tip" data-tip="Preenchido automaticamente pela calculadora acima. Você pode sobrescrever com qualquer valor. Deixe zero se não houver trade-in.">?</span>
+          </div>
+          <div class="inp-wrap p">
+            <span class="pfx">R$</span>
+            <input type="number" id="inp-tradein" min="0" step="0.01" placeholder="0,00" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="out-pill" style="margin-top:13px">
+          <span class="pill-label">PVF após crédito trade-in</span>
+          <span class="pill-val" id="out-tradein">R$ —</span>
+        </div>
+
+        <div class="ti-mode-wrap">
+          <div class="ti-mode-label">Aplicar desconto PIX sobre:</div>
+          <div class="ti-mode-pills">
+            <div class="ti-mode-opt">
+              <input type="radio" id="ti-mode-total" name="ti-mode" value="total" checked>
+              <label for="ti-mode-total">
+                <span class="dot"></span>
+                Valor total
+              </label>
+            </div>
+            <div class="ti-mode-opt">
+              <input type="radio" id="ti-mode-diff" name="ti-mode" value="diff">
+              <label for="ti-mode-diff">
+                <span class="dot"></span>
+                Apenas diferença
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- §3 Descontos -->
+      <div class="card">
+        <div class="card-title">
+          <span class="sec-num">3</span>
+          <h2>Descontos</h2>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="field-label">
+              Desconto PIX %
+              <span class="tip" data-tip="Desconto concedido para pagamento via PIX (transferência instantânea).">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-dpix" min="0" max="100" step="0.1" placeholder="0,0" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              Desconto à vista %
+              <span class="tip" data-tip="Desconto para pagamento em dinheiro/débito imediato. Pode ser diferente do PIX.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-davista" min="0" max="100" step="0.1" placeholder="0,0" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              Pag. direto fornecedor %
+              <span class="tip" data-tip="Desconto quando o cliente paga diretamente ao fornecedor, que repassa sua comissão/margem.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-dfornec" min="0" max="100" step="0.1" placeholder="0,0" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              Desconto parcelado %
+              <span class="tip" data-tip="Desconto aplicado no parcelamento em cartão de crédito. Geralmente menor pois há taxa de cartão.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-dparcela" min="0" max="100" step="0.1" placeholder="0,0" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- §4 Custos -->
+      <div class="card">
+        <div class="card-title">
+          <span class="sec-num">4</span>
+          <h2>Custos &amp; Taxas</h2>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <div class="field-label">
+              Taxa cartão %
+              <span class="tip" data-tip="Taxa cobrada pela operadora no parcelamento. Ex: 3,5% para 12x. Reduz sua margem líquida no cenário parcelado.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-cartao" min="0" max="100" step="0.01" placeholder="0,00" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              Imposto / ICMS %
+              <span class="tip" data-tip="Percentual de imposto sobre a venda. Deduzido no cálculo da margem líquida de todos os cenários.">?</span>
+            </div>
+            <div class="inp-wrap s">
+              <input type="number" id="inp-imposto" min="0" max="100" step="0.01" placeholder="0,00" autocomplete="off">
+              <span class="sfx">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <button class="btn btn-primary" onclick="salvar()">💾 Salvar Cotação <span style="opacity:.6;font-size:11px;">(Ctrl+S)</span></button>
+        <button class="btn btn-ghost" onclick="limparCampos()">✕ Limpar</button>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- RIGHT: Results -->
+    <div class="results-col">
+
+      <!-- Hero -->
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="hero-label">Preço Venda Final</div>
+          <div class="hero-price" id="hero-pvf">R$ —</div>
+        </div>
+        <div class="hero-right">
+          <div class="markup-badge" id="hero-markup">—</div>
+          <div id="hero-sub" style="font-size:11px;">Preencha custo e markup</div>
+        </div>
+      </div>
+
+      <!-- 4 Scenarios -->
+      <div class="scenarios">
+
+        <!-- PIX / À vista -->
+        <div class="sc-card">
+          <div class="sc-top">
+            <span class="badge badge-pix">PIX / À vista</span>
+            <button class="copy-btn" onclick="copiar('pix')" title="Copiar preço PIX">📋</button>
+          </div>
+          <div class="sc-price" id="sc-pix-p">R$ —</div>
+          <div class="sc-sub" id="sc-pix-sub">Pagamento via PIX</div>
+          <div class="sc-margins">
+            <div class="m-chip">
+              <span class="m-label">M. Bruta</span>
+              <span class="m-val neu" id="sc-pix-mb">—</span>
+            </div>
+            <div class="m-chip">
+              <span class="m-label">M. Líquida</span>
+              <span class="m-val neu" id="sc-pix-ml">—</span>
+            </div>
+            <div class="m-chip m-chip-lucro">
+              <span class="m-label">Lucro R$</span>
+              <span class="m-val neu" id="sc-pix-lr">—</span>
+            </div>
+          </div>
+          <div class="avista-note" id="avista-note"></div>
+        </div>
+
+        <!-- Parcelado 12x -->
+        <div class="sc-card">
+          <div class="sc-top">
+            <span class="badge badge-parc">Parcelado 12×</span>
+            <button class="copy-btn" onclick="copiar('parcela')" title="Copiar preço parcelado">📋</button>
+          </div>
+          <div class="sc-price" id="sc-parc-p">R$ —</div>
+          <div class="sc-sub" id="sc-parc-sub">Cartão de crédito</div>
+          <div class="sc-margins">
+            <div class="m-chip">
+              <span class="m-label">M. Bruta</span>
+              <span class="m-val neu" id="sc-parc-mb">—</span>
+            </div>
+            <div class="m-chip">
+              <span class="m-label">M. Líquida</span>
+              <span class="m-val neu" id="sc-parc-ml">—</span>
+            </div>
+            <div class="m-chip m-chip-lucro">
+              <span class="m-label">Lucro R$</span>
+              <span class="m-val neu" id="sc-parc-lr">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pag. Fornecedor -->
+        <div class="sc-card">
+          <div class="sc-top">
+            <span class="badge badge-fornec">Pag. Fornecedor</span>
+            <button class="copy-btn" onclick="copiar('fornec')" title="Copiar preço fornecedor">📋</button>
+          </div>
+          <div class="sc-price" id="sc-fnc-p">R$ —</div>
+          <div class="sc-sub">Pagamento direto ao fornecedor</div>
+          <div class="sc-margins">
+            <div class="m-chip">
+              <span class="m-label">M. Bruta</span>
+              <span class="m-val neu" id="sc-fnc-mb">—</span>
+            </div>
+            <div class="m-chip">
+              <span class="m-label">M. Líquida</span>
+              <span class="m-val neu" id="sc-fnc-ml">—</span>
+            </div>
+            <div class="m-chip m-chip-lucro">
+              <span class="m-label">Lucro R$</span>
+              <span class="m-val neu" id="sc-fnc-lr">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trade-in + PIX -->
+        <div class="sc-card">
+          <div class="sc-top">
+            <span class="badge badge-ti">Trade-in + PIX</span>
+            <button class="copy-btn" onclick="copiar('tradein')" title="Copiar preço trade-in">📋</button>
+          </div>
+          <div class="sc-price" id="sc-ti-p">R$ —</div>
+          <div class="sc-sub" id="sc-ti-sub">Crédito de peça + PIX</div>
+          <div class="sc-margins">
+            <div class="m-chip">
+              <span class="m-label">M. Bruta</span>
+              <span class="m-val neu" id="sc-ti-mb">—</span>
+            </div>
+            <div class="m-chip">
+              <span class="m-label">M. Líquida</span>
+              <span class="m-val neu" id="sc-ti-ml">—</span>
+            </div>
+            <div class="m-chip m-chip-lucro">
+              <span class="m-label">Lucro R$</span>
+              <span class="m-val neu" id="sc-ti-lr">—</span>
+            </div>
+          </div>
+          <div class="ti-note" id="ti-note"></div>
+        </div>
+
+      </div><!-- /scenarios -->
+    </div><!-- /right -->
+  </div><!-- /main-grid -->
+
+  <!-- HISTORY -->
+  <div class="history-wrap">
+    <div class="card">
+      <div class="history-hdr">
+        <h3>📋 Histórico de Cotações</h3>
+        <button class="btn-sm" onclick="limparHistorico()">🗑 Limpar tudo</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data / Hora</th>
+              <th>Cliente</th>
+              <th>Produto</th>
+              <th>Custo</th>
+              <th>Markup</th>
+              <th>PVF</th>
+              <th>Trade-in</th>
+              <th>M. Bruta R$</th>
+              <th>M. Líquida</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="hist-body">
+            <tr><td colspan="10"><div class="empty-hist">Nenhuma cotação salva ainda. Preencha os campos e clique em <strong>Salvar Cotação</strong>.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- ── MODAL EDITAR ──────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)fecharModal()">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-title">✏️ Editar Cotação</div>
+        <div class="modal-info" id="modal-info"></div>
+      </div>
+      <button class="modal-close" onclick="fecharModal()" title="Fechar">✕</button>
+    </div>
+    <div class="field field-text" style="margin-bottom:13px">
+      <div class="field-label">Nome do cliente</div>
+      <input type="text" id="modal-cliente" placeholder="Nome do cliente..." maxlength="80" autocomplete="off">
+    </div>
+    <div class="field field-text" style="margin-bottom:0">
+      <div class="field-label">Produto / Descrição</div>
+      <textarea id="modal-produto" placeholder="Ex: Anel com diamante 18K..." maxlength="120"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarModal()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Utils ─────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const num = id => parseFloat($(id).value) || 0;
+const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const pct = v => isFinite(v) ? v.toFixed(1) + '%' : '—';
+
+function marginClass(v) {
+  if (!isFinite(v) || isNaN(v)) return 'neu';
+  if (v >= 25) return 'pos';
+  if (v >= 10) return 'warn';
+  return 'neg';
+}
+
+function setMargin(elId, v) {
+  const el = $(elId);
+  el.textContent = pct(v);
+  el.className = 'm-val ' + marginClass(v);
+}
+
+function setLucro(elId, v) {
+  const el = $(elId);
+  if (!isFinite(v) || isNaN(v)) { el.textContent = '—'; el.className = 'm-val neu'; return; }
+  el.textContent = brl(v);
+  el.className = 'm-val ' + marginClass(v); // reuse same color scale
+}
+
+function setPrice(elId, v) {
+  $(elId).textContent = isFinite(v) && v > 0 ? brl(v) : 'R$ —';
+}
+
+// ── State ─────────────────────────────────────────────────────────
+let state = {};
+
+// ── Trade-in Calculator ───────────────────────────────────────────
+// Fires when any of the 3 calculator fields change.
+// Writes computed value into inp-tradein and shows preview.
+// If user edits inp-tradein directly afterwards, that value takes over
+// until a calculator field is changed again.
+function calcTradeIn() {
+  const peso  = num('inp-ti-peso');
+  const ouro  = num('inp-ti-ouro');
+  const frac  = num('inp-ti-frac');
+  const preview = $('ti-calc-preview');
+
+  if (peso > 0 && ouro > 0 && frac > 0) {
+    const computed = peso * ouro * (frac / 100);
+    $('inp-tradein').value = computed.toFixed(2);
+    $('ti-calc-val').textContent = brl(computed);
+    preview.style.display = 'flex';
+  } else {
+    preview.style.display = 'none';
+  }
+  calc();
+}
+
+// ── Core Calculation ──────────────────────────────────────────────
+function calc() {
+  const custo    = num('inp-custo');
+  const markup   = num('inp-markup');
+  const tradein  = num('inp-tradein');
+  const dPix     = num('inp-dpix');
+  const dAvista  = num('inp-davista');
+  const dFornec  = num('inp-dfornec');
+  const dParcela = num('inp-dparcela');
+  const taxCard  = num('inp-cartao');
+  const imposto  = num('inp-imposto');
+
+  if (!custo || !markup) {
+    resetOutputs();
+    state = {};
+    return;
+  }
+
+  // ── Base ──────────────────────────────────────────────────────
+  const pvf = custo * markup;
+
+  $('out-pvf').textContent = brl(pvf);
+  $('hero-pvf').textContent = brl(pvf);
+  $('hero-markup').textContent = `Markup ×${markup}`;
+  $('hero-sub').textContent = `Custo: ${brl(custo)} · PVF: ${brl(pvf)}`;
+
+  // ── Trade-in ──────────────────────────────────────────────────
+  const pvfPostTI = Math.max(0, pvf - tradein);
+  $('out-tradein').textContent = brl(pvfPostTI);
+
+  // ── Scenario prices ───────────────────────────────────────────
+  const precoPix     = pvf * (1 - dPix / 100);
+  const precoAvista  = pvf * (1 - dAvista / 100);
+  const precoParcela = pvf * (1 - dParcela / 100);
+  const precoFornec  = pvf * (1 - dFornec / 100);
+  // ── Trade-in mode & cash calculation ─────────────────────────
+  // Lê o toggle: 'total' = desconto sobre PVF inteiro
+  //              'diff'  = desconto sobre a diferença (PVF − trade-in)
+  const tiMode = document.querySelector('input[name="ti-mode"]:checked')?.value || 'total';
+
+  let precoTI, cashTI;
+  if (tiMode === 'total') {
+    // Modo 1 (padrão): desconto s/ PVF → subtrai trade-in
+    // cashTI = (PVF × (1 − dPix%)) − trade-in
+    precoTI = precoPix;
+    cashTI  = Math.max(0, precoPix - tradein);
+  } else {
+    // Modo 2: desconto s/ diferença (PVF − trade-in)
+    // cashTI = (PVF − trade-in) × (1 − dPix%)
+    // precoTI = PVF (base fiscal permanece o preço total da peça)
+    precoTI = pvf;
+    cashTI  = Math.max(0, pvf - tradein) * (1 - dPix / 100);
+  }
+
+  // ── Margin helpers ────────────────────────────────────────────
+  // Standard (PIX, Parcelado, Fornecedor): tax and fee on full sale price.
+  function margins(preco, extraFeesPct = 0) {
+    if (!preco) return { mb: NaN, ml: NaN, mb_r: NaN, ml_r: NaN };
+    const mb_r = preco - custo;
+    const ml_r = preco * (1 - imposto / 100 - extraFeesPct / 100) - custo;
+    return { mb: mb_r / preco * 100, ml: ml_r / preco * 100, mb_r, ml_r };
+  }
+
+  // Trade-in: trade-in é meio de pagamento, não custo.
+  //   Imposto → sobre precoVenda (base fiscal: PVF total na peça vendida).
+  //   Taxa    → apenas sobre cash efetivamente recebido do cliente.
+  function marginsTradeIn(precoVenda, cashReceived, extraFeesPct = 0) {
+    if (!precoVenda) return { mb: NaN, ml: NaN, mb_r: NaN, ml_r: NaN };
+    const mb_r = precoVenda - custo;
+    const ml_r = mb_r - (precoVenda * imposto / 100) - (cashReceived * extraFeesPct / 100);
+    return { mb: mb_r / precoVenda * 100, ml: ml_r / precoVenda * 100, mb_r, ml_r };
+  }
+
+  const mPix    = margins(precoPix);
+  const mParc   = margins(precoParcela, taxCard);
+  const mFornec = margins(precoFornec);
+  const mTI     = marginsTradeIn(precoTI, cashTI, taxCard);
+
+  // ── Render: PIX ──────────────────────────────────────────────
+  setPrice('sc-pix-p', precoPix);
+  $('sc-pix-sub').textContent = dPix > 0 ? `Desconto ${dPix}% no PIX` : 'Pagamento via PIX';
+  setMargin('sc-pix-mb', mPix.mb);
+  setMargin('sc-pix-ml', mPix.ml);
+  setLucro('sc-pix-lr', mPix.ml_r);
+
+  const avistaNote = $('avista-note');
+  if (dAvista > 0 && dAvista !== dPix) {
+    avistaNote.style.display = 'block';
+    avistaNote.textContent = `À vista (dinheiro): ${brl(precoAvista)} · desc. ${dAvista}%`;
+  } else {
+    avistaNote.style.display = 'none';
+  }
+
+  // ── Render: Parcelado ─────────────────────────────────────────
+  setPrice('sc-parc-p', precoParcela);
+  $('sc-parc-sub').textContent = precoParcela > 0
+    ? `12× de ${brl(precoParcela / 12)}${dParcela > 0 ? ` · desc. ${dParcela}%` : ''}`
+    : 'Cartão de crédito';
+  setMargin('sc-parc-mb', mParc.mb);
+  setMargin('sc-parc-ml', mParc.ml);
+  setLucro('sc-parc-lr', mParc.ml_r);
+
+  // ── Render: Fornecedor ────────────────────────────────────────
+  setPrice('sc-fnc-p', precoFornec);
+  setMargin('sc-fnc-mb', mFornec.mb);
+  setMargin('sc-fnc-ml', mFornec.ml);
+  setLucro('sc-fnc-lr', mFornec.ml_r);
+
+  // ── Render: Trade-in + PIX ────────────────────────────────────
+  const tiHasValue = tradein > 0;
+  setPrice('sc-ti-p', tiHasValue ? cashTI : precoPix);
+
+  // Subtítulo contextual conforme o modo
+  if (tiHasValue) {
+    if (tiMode === 'total') {
+      $('sc-ti-sub').textContent = `Desc. s/ PVF total → paga ${brl(cashTI)}`;
+    } else {
+      const diff = Math.max(0, pvf - tradein);
+      $('sc-ti-sub').textContent = `Desc. s/ diferença ${brl(diff)} → paga ${brl(cashTI)}`;
+    }
+  } else {
+    $('sc-ti-sub').textContent = 'Crédito + PIX (trade-in vazio)';
+  }
+
+  setMargin('sc-ti-mb', mTI.mb);
+  setMargin('sc-ti-ml', mTI.ml);
+  setLucro('sc-ti-lr', mTI.ml_r);
+
+  const tiNote = $('ti-note');
+  if (tiHasValue) {
+    tiNote.style.display = 'block';
+    if (tiMode === 'total') {
+      tiNote.innerHTML = `Crédito: <strong>${brl(tradein)}</strong> · PVF×desc = ${brl(precoPix)} → paga <strong>${brl(cashTI)}</strong>`;
+    } else {
+      const diff = Math.max(0, pvf - tradein);
+      tiNote.innerHTML = `Crédito: <strong>${brl(tradein)}</strong> · Diferença ${brl(diff)}×desc → paga <strong>${brl(cashTI)}</strong>`;
+    }
+  } else {
+    tiNote.style.display = 'none';
+  }
+
+  // ── Save state ────────────────────────────────────────────────
+  state = {
+    custo, markup, pvf, tradein, tiMode,
+    precoPix, precoAvista, precoParcela, precoFornec, cashTI, precoTI,
+    mPix, mParc, mFornec, mTI,
+    imposto, taxCard
+  };
+}
+
+function resetOutputs() {
+  ['out-pvf','out-tradein','hero-pvf','sc-pix-p','sc-parc-p','sc-fnc-p','sc-ti-p']
+    .forEach(id => $(id).textContent = 'R$ —');
+  $('hero-markup').textContent = '—';
+  $('hero-sub').textContent = 'Preencha custo e markup';
+  ['sc-pix-mb','sc-pix-ml','sc-pix-lr',
+   'sc-parc-mb','sc-parc-ml','sc-parc-lr',
+   'sc-fnc-mb','sc-fnc-ml','sc-fnc-lr',
+   'sc-ti-mb','sc-ti-ml','sc-ti-lr'].forEach(id => {
+    $(id).textContent = '—';
+    $(id).className = 'm-val neu';
+  });
+  $('ti-note').style.display = 'none';
+  $('avista-note').style.display = 'none';
+}
+
+// ── Clipboard ─────────────────────────────────────────────────────
+const priceOf = {
+  pix:     () => state.precoPix,
+  parcela: () => state.precoParcela,
+  fornec:  () => state.precoFornec,
+  tradein: () => state.tradein > 0 ? state.cashTI : state.precoPix,
+};
+
+function copiar(key) {
+  const v = priceOf[key]?.();
+  if (!v || !isFinite(v)) { toast('Calcule um preço primeiro.'); return; }
+  navigator.clipboard.writeText(brl(v))
+    .then(() => toast(`Copiado: ${brl(v)}`))
+    .catch(() => toast('Não foi possível copiar.'));
+}
+
+// ── History ───────────────────────────────────────────────────────
+const LS_KEY = 'spaolonzi-v1';
+let history = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+
+function renderHistory() {
+  const tb = $('hist-body');
+  if (!history.length) {
+    tb.innerHTML = `<tr><td colspan="10"><div class="empty-hist">Nenhuma cotação salva ainda. Preencha os campos e clique em <strong>Salvar Cotação</strong>.</div></td></tr>`;
+    return;
+  }
+  tb.innerHTML = history
+    .map((h, i) => ({ h, i }))
+    .reverse()
+    .slice(0, 20)
+    .map(({ h, i }) => `
+    <tr>
+      <td style="font-size:11px;white-space:nowrap">${h.dt}</td>
+      <td>${h.cliente || '—'}</td>
+      <td class="hist-produto" title="${(h.produto||'').replace(/"/g,'&quot;')}">${h.produto || '—'}</td>
+      <td>${brl(h.custo)}</td>
+      <td>×${h.markup}</td>
+      <td><strong>${brl(h.pvf)}</strong></td>
+      <td>${h.tradein > 0 ? brl(h.tradein) : '—'}</td>
+      <td class="${marginClass(h.mbPix)}">${isFinite(h.mbPix_r) ? brl(h.mbPix_r) : pct(h.mbPix)}</td>
+      <td class="${marginClass(h.mlPix)}">${pct(h.mlPix)}</td>
+      <td><button class="edit-btn" onclick="abrirModal(${i})">✏️ editar</button></td>
+    </tr>`).join('');
+}
+
+function salvar() {
+  if (!state.pvf) { toast('Preencha custo e markup antes de salvar.'); return; }
+  const now = new Date();
+  const dt = now.toLocaleDateString('pt-BR') + ' ' +
+    now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const cliente = $('inp-cliente').value.trim();
+  const produto  = $('inp-produto').value.trim();
+  history.push({
+    dt,
+    cliente:      cliente || '—',
+    produto:      produto || '—',
+    custo:        state.custo,
+    markup:       state.markup,
+    pvf:          state.pvf,
+    tradein:      state.tradein,
+    precoPix:     state.precoPix,
+    precoParcela: state.precoParcela,
+    precoFornec:  state.precoFornec,
+    cashTI:       state.cashTI,
+    mbPix:        state.mPix.mb,
+    mbPix_r:      state.mPix.mb_r,
+    mlPix:        state.mPix.ml,
+    mlPix_r:      state.mPix.ml_r,
+    tiMode:       state.tiMode || 'total',
+  });
+  localStorage.setItem(LS_KEY, JSON.stringify(history));
+  renderHistory();
+  toast(`✅ Cotação salva${cliente ? ' — ' + cliente : ''}!`);
+}
+
+function limparHistorico() {
+  if (!history.length) return;
+  if (!confirm('Limpar todo o histórico de cotações?')) return;
+  history = [];
+  localStorage.removeItem(LS_KEY);
+  renderHistory();
+  toast('Histórico limpo.');
+}
+
+function limparCampos() {
+  document.querySelectorAll('input[type="number"]').forEach(i => {
+    if (i.id === 'inp-ti-frac') { i.value = '65'; return; }
+    i.value = '';
+  });
+  $('inp-cliente').value = '';
+  $('inp-produto').value = '';
+  $('ti-calc-preview').style.display = 'none';
+  // Resetar toggle para padrão "Valor total"
+  const rTotal = $('ti-mode-total');
+  if (rTotal) rTotal.checked = true;
+  calc();
+  toast('Campos limpos.');
+}
+
+// ── Modal editar ──────────────────────────────────────────────────
+let editingIdx = -1;
+
+function abrirModal(idx) {
+  editingIdx = idx;
+  const h = history[idx];
+  $('modal-cliente').value = (h.cliente === '—' ? '' : h.cliente) || '';
+  $('modal-produto').value  = (h.produto  === '—' ? '' : h.produto)  || '';
+  $('modal-info').textContent = `${h.dt} · PVF ${brl(h.pvf)}`;
+  $('modal-overlay').classList.add('open');
+  setTimeout(() => $('modal-cliente').focus(), 50);
+}
+
+function fecharModal() {
+  $('modal-overlay').classList.remove('open');
+  editingIdx = -1;
+}
+
+function salvarModal() {
+  if (editingIdx < 0) return;
+  history[editingIdx].cliente = $('modal-cliente').value.trim() || '—';
+  history[editingIdx].produto  = $('modal-produto').value.trim()  || '—';
+  localStorage.setItem(LS_KEY, JSON.stringify(history));
+  renderHistory();
+  fecharModal();
+  toast('✅ Cotação atualizada.');
+}
+
+// Fechar modal com Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+// ── Toast ─────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── Dark mode ─────────────────────────────────────────────────────
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const on = document.body.classList.contains('dark');
+  document.querySelector('.dark-toggle').textContent = on ? '☀️ Claro' : '🌙 Escuro';
+  localStorage.setItem('spaolonzi-dark', on ? '1' : '0');
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); salvar(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'l') { e.preventDefault(); limparCampos(); }
+});
+
+// ── Event listeners ───────────────────────────────────────────────
+// Trade-in calculator inputs → calcTradeIn (which also calls calc)
+['inp-ti-peso', 'inp-ti-ouro', 'inp-ti-frac'].forEach(id => {
+  $(id).addEventListener('input', calcTradeIn);
+});
+
+// All other number inputs → calc directly
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+  if (['inp-ti-peso','inp-ti-ouro','inp-ti-frac'].includes(inp.id)) return;
+  inp.addEventListener('input', calc);
+});
+
+// Trade-in mode toggle → recalc ao vivo
+document.querySelectorAll('input[name="ti-mode"]').forEach(r => {
+  r.addEventListener('change', calc);
+});
+
+// ── Date header ───────────────────────────────────────────────────
+$('hdr-date').textContent = new Date().toLocaleDateString('pt-BR', {
+  weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'
+});
+
+// ── Init ──────────────────────────────────────────────────────────
+if (localStorage.getItem('spaolonzi-dark') === '1') {
+  document.body.classList.add('dark');
+  document.querySelector('.dark-toggle').textContent = '☀️ Claro';
+}
+renderHistory();
+calc();
+</script>
+</body>
+</html>
